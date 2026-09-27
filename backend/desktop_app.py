@@ -63,12 +63,12 @@ def main() -> None:
 
     target = DEV_SERVER_URL if args.dev else str(FRONTEND_DIST)
     webview.create_window(
-        "WorkFlowOS",
+        "RemoOS",
         target,
         width=1360,
         height=860,
         min_size=(1024, 680),
-        background_color="#08090a",
+        background_color="#f6f3e5",
     )
     webview.start()
 

@@ -15,17 +15,17 @@ export function AskUserCard({
   const [custom, setCustom] = useState("");
 
   return (
-    <div className="glow-card mt-2.5 rounded-xl p-3.5">
+    <div className="glow-card mt-3 rounded-2xl p-4 border border-amber-400/40 shadow-lg bg-white/90">
       <AgentBadge kind="user" label="Input needed" />
-      <p className="mt-2 text-[0.86rem] text-slate-100">{question}</p>
+      <p className="mt-2 text-sm font-semibold text-slate-900 leading-snug">{question}</p>
       {options.length > 0 && (
-        <div className="mt-2.5 flex flex-wrap gap-1.5">
+        <div className="mt-3 flex flex-wrap gap-2">
           {options.map((opt) => (
             <button
               key={opt}
               disabled={busy}
               onClick={() => onRespond(opt)}
-              className="hairline rounded-full border px-3 py-1 text-[0.8rem] text-slate-200 transition-colors hover:border-[var(--hairline-strong)] hover:bg-white/5 disabled:opacity-50"
+              className="rounded-xl border border-amber-400/50 bg-amber-50 px-3.5 py-1.5 text-xs font-semibold text-slate-900 transition-all hover:bg-amber-100 hover:shadow-md disabled:opacity-50"
             >
               {opt}
             </button>
@@ -37,16 +37,16 @@ export function AskUserCard({
           e.preventDefault();
           if (custom.trim()) onRespond(custom.trim());
         }}
-        className="mt-2.5 flex gap-2"
+        className="mt-3 flex gap-2"
       >
         <input
           value={custom}
           onChange={(e) => setCustom(e.target.value)}
           placeholder="Or type your own answer..."
           disabled={busy}
-          className="hairline flex-1 rounded-lg border bg-black/30 px-3 py-1.5 text-[0.82rem] text-slate-100 placeholder:text-slate-600 focus:border-[var(--hairline-strong)] focus:outline-none disabled:opacity-50"
+          className="flex-1 rounded-xl border border-slate-300 bg-white px-3.5 py-2 text-xs font-medium text-slate-900 placeholder:text-slate-500 focus:border-amber-500 focus:ring-1 focus:ring-amber-500 focus:outline-none disabled:opacity-50"
         />
-        <button type="submit" disabled={busy || !custom.trim()} className="glow-btn rounded-full px-3.5 py-1.5 text-[0.8rem] font-semibold">
+        <button type="submit" disabled={busy || !custom.trim()} className="glow-btn rounded-xl px-4 py-2 text-xs font-bold text-white">
           Send
         </button>
       </form>

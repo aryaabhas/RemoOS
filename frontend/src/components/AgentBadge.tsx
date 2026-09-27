@@ -8,11 +8,19 @@ const LABELS: Record<AgentKind, string> = {
   system: "System",
 };
 
-// One consistent monochrome style for every agent -- identity is carried by
-// the label text, not by color.
+const STYLES: Record<AgentKind, string> = {
+  planner: "border-blue-500/40 bg-blue-500/10 text-blue-300 shadow-[0_0_10px_rgba(59,130,246,0.25)]",
+  executor: "border-emerald-500/40 bg-emerald-500/10 text-emerald-300 shadow-[0_0_10px_rgba(16,185,129,0.25)]",
+  replanner: "border-amber-500/40 bg-amber-500/10 text-amber-300 shadow-[0_0_12px_rgba(245,158,11,0.3)]",
+  user: "border-purple-500/40 bg-purple-500/10 text-purple-300 shadow-[0_0_10px_rgba(168,85,247,0.25)]",
+  system: "border-slate-500/40 bg-slate-500/10 text-slate-300 shadow-[0_0_8px_rgba(148,163,184,0.2)]",
+};
+
 export function AgentBadge({ kind, label }: { kind: AgentKind; label?: string }) {
   return (
-    <span className="inline-flex flex-none items-center rounded-full border border-[var(--hairline-strong)] px-1.5 py-0.5 text-[0.62rem] font-semibold uppercase tracking-wide text-[var(--silver-bright)] shadow-[0_0_10px_-3px_rgba(215,220,227,0.45)]">
+    <span
+      className={`inline-flex flex-none items-center rounded-full border px-2 py-0.5 text-[0.62rem] font-bold uppercase tracking-wider transition-all ${STYLES[kind]}`}
+    >
       {label ?? LABELS[kind]}
     </span>
   );

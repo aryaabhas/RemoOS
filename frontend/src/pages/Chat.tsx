@@ -281,34 +281,34 @@ export default function Chat() {
         aria-hidden="true"
       />
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-[var(--hairline)] bg-[#0c0d0f] p-4 shadow-[0_0_40px_-10px_rgba(215,220,227,0.25)] transition-transform duration-300 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-72 flex-col border-r border-amber-200/80 bg-[#faf7ed] p-4 shadow-xl transition-transform duration-300 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <a href="#/" className="mb-6 flex items-center gap-2 px-1">
-          <img src={logo} alt="" className="glow-logo h-7 w-7 rounded-lg" />
-          <span className="glow-text font-display text-base font-medium">WorkFlowOS</span>
+        <a href="#/" className="mb-6 flex items-center gap-2.5 px-1">
+          <img src={logo} alt="RemoOS" className="h-8 w-8 rounded-lg object-contain shadow-sm" />
+          <span className="font-display text-lg font-bold text-slate-900 tracking-tight">RemoOS</span>
         </a>
         <button
           onClick={startNewChat}
           disabled={sending}
-          className="hairline mb-4 flex items-center gap-2 rounded-lg border px-3 py-2 text-sm font-medium text-slate-200 transition-colors hover:border-[var(--hairline-strong)] hover:bg-white/5 disabled:opacity-50"
+          className="mb-4 flex items-center gap-2 rounded-xl border border-amber-300 bg-white px-3.5 py-2.5 text-xs font-bold text-slate-900 shadow-sm transition-all hover:bg-amber-50 hover:border-amber-400 disabled:opacity-50"
         >
           + New goal
         </button>
-        <div className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Runs</div>
+        <div className="mb-2 text-xs font-bold uppercase tracking-wider text-slate-700">Runs</div>
         <div className="flex-1 space-y-1 overflow-y-auto">
-          {runs.length === 0 && <p className="px-1 text-xs text-slate-600">Nothing yet — send a goal to start.</p>}
+          {runs.length === 0 && <p className="px-1 text-xs font-medium text-slate-600">Nothing yet — send a goal to start.</p>}
           {runs.map((r) => (
             <div
               key={r.id}
-              className={`group flex items-center gap-0.5 rounded-lg ${activeRun?.id === r.id ? "bg-white/5" : ""}`}
+              className={`group flex items-center gap-0.5 rounded-xl transition-all ${activeRun?.id === r.id ? "bg-amber-100/70 border border-amber-300/60" : "hover:bg-amber-50"}`}
             >
               <button
                 onClick={() => openRun(r.id)}
-                className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-lg px-2.5 py-2 text-left text-xs transition-colors hover:bg-white/5"
+                className="flex min-w-0 flex-1 items-center justify-between gap-2 rounded-xl px-2.5 py-2 text-left text-xs font-semibold text-slate-900"
               >
-                <span className="truncate text-slate-300">{r.goal}</span>
+                <span className="truncate">{r.goal}</span>
                 <StatusBadge status={r.status} />
               </button>
               <button
@@ -318,13 +318,13 @@ export default function Chat() {
                 }}
                 aria-label={`Delete run: ${r.goal}`}
                 title="Delete"
-                className="flex-none rounded-lg p-1.5 text-slate-600 opacity-0 transition-all duration-150 hover:text-[var(--silver-bright)] hover:[filter:drop-shadow(0_0_6px_rgba(215,220,227,0.85))] group-hover:opacity-100"
+                className="flex-none rounded-lg p-1.5 text-slate-500 opacity-0 transition-all hover:text-red-600 group-hover:opacity-100"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path
                     d="M5 7H19M10 11V17M14 11V17M6 7L7 19H17L18 7M9 7V4H15V7"
                     stroke="currentColor"
-                    strokeWidth="1.6"
+                    strokeWidth="1.8"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
@@ -336,17 +336,17 @@ export default function Chat() {
       </aside>
 
       <div className="relative z-10 flex min-w-0 flex-1 flex-col">
-        <header className="flex flex-none items-center justify-between gap-3 px-5 py-3">
+        <header className="flex flex-none items-center justify-between gap-3 px-5 py-3 border-b border-amber-200/50 bg-[#faf7ed]/60 backdrop-blur-sm">
           <button
-            className="flex h-9 w-9 items-center justify-center rounded-[10px] text-slate-400 transition-colors hover:bg-white/5 hover:text-slate-200"
+            className="flex h-9 w-9 items-center justify-center rounded-xl border border-amber-300/60 bg-white text-slate-800 shadow-sm transition-all hover:bg-amber-50"
             onClick={() => setSidebarOpen(true)}
             aria-label="Open runs"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              <path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
           </button>
-          <span className="hidden min-w-0 truncate text-sm text-slate-500 md:block">{activeRun ? activeRun.goal : ""}</span>
+          <span className="hidden min-w-0 truncate text-sm font-bold text-slate-800 md:block">{activeRun ? activeRun.goal : ""}</span>
           <div className="flex items-center gap-1.5">
             {!widgetsMovable && (
               <button
@@ -365,33 +365,16 @@ export default function Chat() {
           </div>
         </header>
 
-        <div data-hero className="hero-panelled relative min-h-0 flex-1">
-          {hasStarted && (
-            <FloatingWidgets
-              run={activeRun}
-              state={activeState}
-              events={activeEvents}
-              live={activeRun?.status === "running"}
-              refreshKey={runsRefresh}
-              onOpenRun={(id) => {
-                setWidgetsOpen(false);
-                openRun(id);
-              }}
-              layout={widgetLayout}
-              setLayout={setWidgetLayout}
-              drawerOpen={widgetsOpen}
-              onCloseDrawer={() => setWidgetsOpen(false)}
-            />
-          )}
+        <div data-hero className="relative min-h-0 flex-1">
 
           {!hasStarted ? (
             <main className="flex h-full flex-col items-center justify-center px-4 pb-16 text-center">
               <img src={logo} alt="" className="glow-logo mb-5 h-16 w-16 rounded-2xl" />
-              <h1 className="glow-text font-display text-3xl font-medium">What should WorkFlowOS do?</h1>
-              <p className="mx-auto mt-2 max-w-sm text-sm text-slate-500">Describe a goal. You'll see the plan before anything runs.</p>
+                            <h1 className="font-display text-3xl font-bold text-slate-900">What should RemoOS do?</h1>
+              <p className="mx-auto mt-2 max-w-sm text-sm font-medium text-slate-700">Describe a goal. You'll see the plan before anything runs.</p>
 
               <form ref={homeComposerRef} onSubmit={handleSubmit} className="mt-8 w-full max-w-2xl">
-                <div className="glow-card flex items-end gap-2 rounded-2xl px-4 py-3 backdrop-blur-md focus-within:border-[var(--hairline-strong)] focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_36px_-8px_rgba(215,220,227,0.45)]">
+                <div className="glow-card flex items-end gap-2 rounded-2xl px-4 py-3 backdrop-blur-md border border-amber-300/50 bg-white/95 shadow-md">
                   <textarea
                     value={goal}
                     onChange={(e) => setGoal(e.target.value)}
@@ -404,7 +387,7 @@ export default function Chat() {
                     placeholder="Describe a goal..."
                     rows={2}
                     autoFocus
-                    className="max-h-40 flex-1 resize-none bg-transparent py-1.5 text-base text-slate-100 placeholder:text-slate-500 focus:outline-none"
+                    className="max-h-40 flex-1 resize-none bg-transparent py-1.5 text-base font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none"
                   />
                   <SendButton disabled={sending || !goal.trim()} size="lg" />
                 </div>
@@ -415,7 +398,7 @@ export default function Chat() {
                   <button
                     key={g}
                     onClick={() => setGoal(g)}
-                    className="hairline rounded-full border bg-white/[0.02] px-3.5 py-1.5 text-xs text-slate-300 transition-all hover:border-[var(--hairline-strong)] hover:bg-white/5 hover:text-white hover:shadow-[0_0_16px_-4px_rgba(215,220,227,0.45)]"
+                    className="rounded-full border border-amber-300/70 bg-white px-3.5 py-1.5 text-xs font-semibold text-slate-800 shadow-sm transition-all hover:border-amber-500 hover:bg-amber-50 hover:shadow-md"
                   >
                     {g}
                   </button>
@@ -427,8 +410,8 @@ export default function Chat() {
             <div className="chat-scroll min-h-0 flex-1 overflow-y-auto">
               <div className="chat-col space-y-5 pb-10 pt-4">
                 {loadingRun && (
-                  <div className="glow-card rise-in flex w-fit items-center gap-2.5 rounded-2xl rounded-bl-sm px-4 py-3 text-sm text-slate-400" data-loading>
-                    <span className="h-2 w-2 animate-pulse rounded-full bg-[var(--silver-bright)] shadow-[0_0_8px_rgba(215,220,227,0.9)]" />
+                  <div className="glow-card rise-in flex w-fit items-center gap-2.5 rounded-2xl rounded-bl-sm px-4 py-3 text-sm font-semibold text-slate-800" data-loading>
+                    <span className="h-2 w-2 animate-pulse rounded-full bg-amber-500 shadow-sm" />
                     Loading run…
                   </div>
                 )}
@@ -437,14 +420,14 @@ export default function Chat() {
                   m.role === "user" ? (
                     <div key={i} className="flex justify-end">
                       <div
-                        className="rise-in max-w-[80%] rounded-2xl rounded-br-sm border border-[rgba(215,220,227,0.35)] px-4 py-2.5 text-sm text-white shadow-[0_0_24px_-8px_rgba(215,220,227,0.4)]"
-                        style={{ background: "linear-gradient(160deg, rgba(215,220,227,0.22), rgba(215,220,227,0.07))" }}
+                        className="rise-in max-w-[80%] rounded-2xl rounded-br-sm border border-amber-400/40 px-4 py-2.5 text-sm text-white shadow-md font-medium"
+                        style={{ background: "linear-gradient(135deg, #f7a06a 0%, #e76f51 100%)" }}
                       >
                         {m.goal}
                       </div>
                     </div>
                   ) : (
-                    <div key={i} className="glow-card rise-in rounded-2xl rounded-bl-sm px-4 py-3.5">
+                    <div key={i} className="glow-card rise-in rounded-2xl rounded-bl-sm px-4 py-3.5 bg-white/90">
                       {m.plan && m.plan.steps?.length > 0 && (
                         <PlanCard
                           plan={m.plan}
@@ -466,15 +449,15 @@ export default function Chat() {
                           onRespond={(answer) => respondAskUser(m.runId!, m.askUser!.approvalId, answer)}
                         />
                       )}
-                      {m.finalText && <p className="mt-3 text-sm leading-relaxed text-slate-200">{m.finalText}</p>}
+                      {m.finalText && <p className="mt-3 text-sm font-semibold leading-relaxed text-slate-900">{m.finalText}</p>}
                     </div>
                   ),
                 )}
                 {waitingForPlan && (
-                  <div className="glow-card rise-in flex w-fit items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-3.5">
-                    <span className="typing-dot h-1.5 w-1.5 rounded-full bg-[var(--silver-bright)]" style={{ animationDelay: "0ms" }} />
-                    <span className="typing-dot h-1.5 w-1.5 rounded-full bg-[var(--silver-bright)]" style={{ animationDelay: "150ms" }} />
-                    <span className="typing-dot h-1.5 w-1.5 rounded-full bg-[var(--silver-bright)]" style={{ animationDelay: "300ms" }} />
+                  <div className="glow-card rise-in flex w-fit items-center gap-1.5 rounded-2xl rounded-bl-sm px-4 py-3.5 bg-white">
+                    <span className="typing-dot h-2 w-2 rounded-full bg-amber-500" style={{ animationDelay: "0ms" }} />
+                    <span className="typing-dot h-2 w-2 rounded-full bg-amber-500" style={{ animationDelay: "150ms" }} />
+                    <span className="typing-dot h-2 w-2 rounded-full bg-amber-500" style={{ animationDelay: "300ms" }} />
                   </div>
                 )}
                 <div ref={endRef} />
@@ -482,7 +465,7 @@ export default function Chat() {
             </div>
 
             <form ref={dockedComposerRef} onSubmit={handleSubmit} className="chat-col flex-none pb-5 pt-2">
-              <div className="glow-card flex items-end gap-2 rounded-2xl px-3 py-2 backdrop-blur-md focus-within:border-[var(--hairline-strong)] focus-within:shadow-[inset_0_1px_0_rgba(255,255,255,0.12),0_0_36px_-8px_rgba(215,220,227,0.45)]">
+              <div className="glow-card flex items-end gap-2 rounded-2xl px-3 py-2 bg-white/95 border border-amber-300/50 shadow-md">
                 <textarea
                   value={goal}
                   onChange={(e) => setGoal(e.target.value)}
@@ -495,11 +478,11 @@ export default function Chat() {
                   placeholder="Describe a goal..."
                   rows={1}
                   autoFocus
-                  className="max-h-32 flex-1 resize-none bg-transparent py-1.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none"
+                  className="max-h-32 flex-1 resize-none bg-transparent py-1.5 text-sm font-semibold text-slate-900 placeholder:text-slate-400 focus:outline-none"
                 />
                 <SendButton disabled={sending || !goal.trim()} />
               </div>
-              <p className="mt-2 text-center text-xs text-slate-600">Press Enter to send, Shift+Enter for a new line</p>
+              <p className="mt-2 text-center text-xs font-semibold text-slate-700">Press Enter to send, Shift+Enter for a new line</p>
             </form>
           </main>
           )}
